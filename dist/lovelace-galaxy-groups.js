@@ -253,9 +253,6 @@ class AlarmGroups extends Polymer.Element {
         let statesensor = "sensor.group_"+config.uniqueid+"_"+config.group+"_state"
         const stateObjS = hass.states[statesensor];
 
-        console.info(statesensor);
-        console.info(stateObjS);
-
         let isUnsetColor;
 		let isSetColor;
 		let isPartColor;
