@@ -241,7 +241,7 @@ class AlarmGroups extends Polymer.Element {
     }
 
     setConfig(config) {
-        if (!config.unique_id) throw new Error('You need to define a unique_id');
+        if (!config.uniqueid) throw new Error('You need to define a uniqueid');
         if (!config.group) throw new Error('You need to define a group');
         this._config = config;
     }
@@ -250,7 +250,8 @@ class AlarmGroups extends Polymer.Element {
 
         const config = this._config;
 
-        const stateObjS = hass.states[config.entity];
+        let statesensor = "sensor.group_"+config.uniqueid+"_"+config.group+"_state"
+        const stateObjS = hass.states[statesensor].state;
 
         let isUnsetColor;
 		let isSetColor;
@@ -258,21 +259,22 @@ class AlarmGroups extends Polymer.Element {
 		let isReadyColor;
         let isLockedColor;
 
-		isUnsetColor = (stateObjS.state === '0') ? 'color:yellow;' : '';
-		isSetColor = (stateObjS.state === '1') ? 'color:red;' : '';
-		isPartColor = (stateObjS.state === '2') ? 'color:orange;' : '';
-		isReadyColor = (stateObjS.state === '3' || stateObjS.state === 'unknown') ? 'color:green;' : '';
-        isLockedColor = (stateObjS.state === '4') ? 'color:red;' : '';
+		isUnsetColor = (stateObjS === '0') ? 'color:yellow;' : '';
+		isSetColor = (stateObjS === '1') ? 'color:red;' : '';
+		isPartColor = (stateObjS === '2') ? 'color:orange;' : '';
+		isReadyColor = (stateObjS === '3' || stateObjS === 'unknown') ? 'color:green;' : '';
+        isLockedColor = (stateObjS === '4') ? 'color:red;' : '';
 
-        const stateObjA = hass.states[config.entity_alarm];
+        let alarmsensor = "sensor.group_"+config.uniqueid+"_"+config.group+"_alarm"
+        const stateObjA = hass.states[alarmsensor].state;
 
         let isNormalColor;
 		let isAlarmColor;
 		let isResetColor;
 
-		isNormalColor = (stateObjA.state === '0' || stateObjA.state === 'unknown') ? 'color:green;' : '';
-        isAlarmColor = (stateObjA.state === '1') ? 'color:red;' : '';
-		isResetColor = (stateObjA.state === '2') ? 'color:yellow;' : '';
+		isNormalColor = (stateObjA === '0' || stateObjA === 'unknown') ? 'color:green;' : '';
+        isAlarmColor = (stateObjA === '1') ? 'color:red;' : '';
+		isResetColor = (stateObjA === '2') ? 'color:yellow;' : '';
 
         let allow_unset;
         let allow_set;
@@ -333,7 +335,7 @@ class AlarmGroups extends Polymer.Element {
         const newState = e.currentTarget.getAttribute('state');
         
         this.hass.callService('mqtt', 'publish', {
-            topic: "galaxy/" + this._config.unique_id + "/group/" + this._config.group + "/cmd/set",
+            topic: "galaxy/" + this._config.uniqueid + "/group/" + this._config.group + "/cmd/set",
             payload: newState
         });
     }
