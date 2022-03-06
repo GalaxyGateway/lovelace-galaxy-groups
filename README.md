@@ -25,7 +25,7 @@ Optional:
     allow_reset: true
     allow_abort: true
     allow_force: true
-
+d
 Set ABCDEF to the uniqueid of the module.
 
 The cards are ment to be used with the Galaxy Gateway module available from https://seasoft.nl
