@@ -241,7 +241,7 @@ class AlarmGroups extends Polymer.Element {
     }
 
     setConfig(config) {
-        if (!config.uniqueid) throw new Error('You need to define a unique_id');
+        if (!config.unique_id) throw new Error('You need to define a unique_id');
         if (!config.group) throw new Error('You need to define a group');
         this._config = config;
     }
