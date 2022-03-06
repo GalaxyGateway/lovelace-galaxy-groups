@@ -251,7 +251,7 @@ class AlarmGroups extends Polymer.Element {
         const config = this._config;
 
         let statesensor = "sensor.group_"+config.uniqueid+"_"+config.group+"_state"
-        const stateObjS = hass.states[statesensor].state;
+        const stateObjS = hass.states[statesensor];
 
         let isUnsetColor;
 		let isSetColor;
@@ -259,22 +259,22 @@ class AlarmGroups extends Polymer.Element {
 		let isReadyColor;
         let isLockedColor;
 
-		isUnsetColor = (stateObjS === '0') ? 'color:yellow;' : '';
-		isSetColor = (stateObjS === '1') ? 'color:red;' : '';
-		isPartColor = (stateObjS === '2') ? 'color:orange;' : '';
-		isReadyColor = (stateObjS === '3' || stateObjS === 'unknown') ? 'color:green;' : '';
-        isLockedColor = (stateObjS === '4') ? 'color:red;' : '';
+		isUnsetColor = (stateObjS.state === '0') ? 'color:yellow;' : '';
+		isSetColor = (stateObjS.state === '1') ? 'color:red;' : '';
+		isPartColor = (stateObjS.state === '2') ? 'color:orange;' : '';
+		isReadyColor = (stateObjS.state === '3' || stateObjS.state === 'unknown') ? 'color:green;' : '';
+        isLockedColor = (stateObjS.state === '4') ? 'color:red;' : '';
 
         let alarmsensor = "sensor.group_"+config.uniqueid+"_"+config.group+"_alarm"
-        const stateObjA = hass.states[alarmsensor].state;
+        const stateObjA = hass.states[alarmsensor];
 
         let isNormalColor;
 		let isAlarmColor;
 		let isResetColor;
 
-		isNormalColor = (stateObjA === '0' || stateObjA === 'unknown') ? 'color:green;' : '';
-        isAlarmColor = (stateObjA === '1') ? 'color:red;' : '';
-		isResetColor = (stateObjA === '2') ? 'color:yellow;' : '';
+		isNormalColor = (stateObjA.state === '0' || stateObjA.state === 'unknown') ? 'color:green;' : '';
+        isAlarmColor = (stateObjA.state === '1') ? 'color:red;' : '';
+		isResetColor = (stateObjA.state === '2') ? 'color:yellow;' : '';
 
         let allow_unset;
         let allow_set;
