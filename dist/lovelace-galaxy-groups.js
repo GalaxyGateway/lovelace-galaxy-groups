@@ -1,4 +1,13 @@
-console.info("%c  lovelace-galaxy-groups  \n%c Version 0.0.1 ", "color: orange; font-weight: bold; background: black", "color: white; font-weight: bold; background: dimgray");
+console.info("%c  lovelace-galaxy-groups  \n%c Version 0.0.2 ", "color: orange; font-weight: bold; background: black", "color: white; font-weight: bold; background: dimgray");
+
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: "lovelace-galaxy-groups",
+  name: "Galaxy Group control",
+  description: "A group control card for Honeywell Galaxy.",
+  preview: true,
+  documentationURL: "https://github.com/GalaxyGateway/lovelace-galaxy-virtualkeypad",
+});
 
 class AlarmGroups extends Polymer.Element {
 
