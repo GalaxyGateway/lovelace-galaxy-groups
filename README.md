@@ -6,7 +6,7 @@ In HACS add a custom repository:
   Set category to: lovelace
 
 Through the dashboard editor manually add a card and set the below config:
-
+```
 type: entities
 title: Group state
 show_header_toggle: false
@@ -17,15 +17,16 @@ entities:
     unique_id: 'ABCDEF'
     name: Group A1
     group: A1
-
+```
 Optional:
+```
     allow_unset: true
     allow_set: true
     allow_part: true
     allow_reset: true
     allow_abort: true
     allow_force: true
-d
+```
 Set ABCDEF to the uniqueid of the module.
 
 The cards are ment to be used with the Galaxy Gateway module available from https://seasoft.nl
