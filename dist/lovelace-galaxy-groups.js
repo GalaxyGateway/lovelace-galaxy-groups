@@ -38,7 +38,7 @@ class AlarmGroups extends Polymer.Element {
                 }
             </style>
             
-            <ha-card hass="[[hass]]" config="[[_config]]">
+            <hui-generic-entity-row hass="[[hass]]" config="[[_config]]">
                 <div class='flex-container' on-click="stopPropagation">
                     <div class='groupstate'>
 
@@ -241,9 +241,8 @@ class AlarmGroups extends Polymer.Element {
     }
 
     setConfig(config) {
-        if (!config.uniqueid) throw new Error('You need to define a uniqueid');
+        if (!config.uniqueid) throw new Error('You need to define a unique_id');
         if (!config.group) throw new Error('You need to define a group');
-        config.entity = "sensor.group_"+config.uniqueid+"_"+config.group+"_state";
         this._config = config;
     }
 
@@ -251,8 +250,7 @@ class AlarmGroups extends Polymer.Element {
 
         const config = this._config;
 
-        let statesensor = "sensor.group_"+config.uniqueid+"_"+config.group+"_state"
-        const stateObjS = hass.states[statesensor];
+        const stateObjS = hass.states[config.entity];
 
         let isUnsetColor;
 		let isSetColor;
@@ -266,8 +264,7 @@ class AlarmGroups extends Polymer.Element {
 		isReadyColor = (stateObjS.state === '3' || stateObjS.state === 'unknown') ? 'color:green;' : '';
         isLockedColor = (stateObjS.state === '4') ? 'color:red;' : '';
 
-        let alarmsensor = "sensor.group_"+config.uniqueid+"_"+config.group+"_alarm"
-        const stateObjA = hass.states[alarmsensor];
+        const stateObjA = hass.states[config.entity_alarm];
 
         let isNormalColor;
 		let isAlarmColor;
@@ -336,7 +333,7 @@ class AlarmGroups extends Polymer.Element {
         const newState = e.currentTarget.getAttribute('state');
         
         this.hass.callService('mqtt', 'publish', {
-            topic: "galaxy/" + this._config.uniqueid + "/group/" + this._config.group + "/cmd/set",
+            topic: "galaxy/" + this._config.unique_id + "/group/" + this._config.group + "/cmd/set",
             payload: newState
         });
     }
