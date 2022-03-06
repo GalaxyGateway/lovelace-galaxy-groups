@@ -38,7 +38,7 @@ class AlarmGroups extends Polymer.Element {
                 }
             </style>
             
-            <hui-generic-entity-row hass="[[hass]]" config="[[_config]]">
+            <ha-card hass="[[hass]]" config="[[_config]]">
                 <div class='flex-container' on-click="stopPropagation">
                     <div class='groupstate'>
 
@@ -243,6 +243,7 @@ class AlarmGroups extends Polymer.Element {
     setConfig(config) {
         if (!config.uniqueid) throw new Error('You need to define a uniqueid');
         if (!config.group) throw new Error('You need to define a group');
+        config.entity = statesensor = "sensor.group_"+config.uniqueid+"_"+config.group+"_state";
         this._config = config;
     }
 
