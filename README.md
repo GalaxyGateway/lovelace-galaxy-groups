@@ -1,11 +1,37 @@
-# HA-Cards
-HA Lovelace cards for Galaxy Gateway module
+# HACS Lovelace group card
+This card can be added through HACS.
+
+In HACS add a custom repository:
+  Set repository to: https://github.com/GalaxyGateway/lovelace-galaxy-groups
+  Set category to: lovelace
+
+Through the dashboard editor manually add a card and set the below config:
+
+type: entities
+title: Group state
+show_header_toggle: false
+entities:
+  - type: custom:lovelace-galaxy-groups
+    entity: sensor.group_ABCDEF_a1_state
+    entity_alarm: sensor.group_ABCDEF_a1_alarm
+    unique_id: 'ABCDEF'
+    name: Group A1
+    group: A1
+
+Optional:
+    allow_unset: true
+    allow_set: true
+    allow_part: true
+    allow_reset: true
+    allow_abort: true
+    allow_force: true
+
+Set ABCDEF to the uniqueid of the module.
 
 The cards are ment to be used with the Galaxy Gateway module available from https://seasoft.nl
 
-Cards available:
+Other card available:
 - Virtual keypad
-- Group status / arming card
 
 The cards provide a way to interface to a Honeywell Galaxy Dimension or Flex panel through the Galaxy Gateway module.
 
