@@ -39,7 +39,7 @@ class AlarmGroups extends Polymer.Element {
             </style>
             
             <hui-generic-entity-row hass="[[hass]]" config="[[_config]]">
-                <div class='flex-container' on-click="stopPropagation">
+                <div class='flex-container' on-tap="stopPropagation">
                     <div class='groupstate'>
 
                         <template is='dom-if' if='{{_allowUnset}}'>
@@ -48,7 +48,7 @@ class AlarmGroups extends Polymer.Element {
                                     title='Unset'
                                     class='mdc-button mdc-button--raised mdc-ripple-upgraded'
                                     toggles state="0"
-                                    on-click='setState'
+                                    on-tap='setState'
                                     disabled='[[!_canUnset]]'>
                                     <ha-icon icon="mdi:home-alert"></ha-icon>
                                 </button>
@@ -60,7 +60,7 @@ class AlarmGroups extends Polymer.Element {
                                     title='Full set'
                                     class='mdc-button mdc-button--raised mdc-ripple-upgraded'
                                     toggles state="1"
-                                    on-click='setState'
+                                    on-tap='setState'
                                     disabled='[[!_canSet]]'>
                                     <ha-icon icon="mdi:shield-lock"></ha-icon>
                                 </button>
@@ -72,7 +72,7 @@ class AlarmGroups extends Polymer.Element {
                                     title='Part set'
                                     class='mdc-button mdc-button--raised mdc-ripple-upgraded'
                                     toggles state="2"
-                                    on-click='setState'
+                                    on-tap='setState'
                                     disabled='[[!_canPart]]'>
                                     <ha-icon icon="mdi:shield-home"></ha-icon>
                                 </button>
@@ -84,7 +84,7 @@ class AlarmGroups extends Polymer.Element {
                                     title='System reset'
                                     class='mdc-button mdc-button--raised mdc-ripple-upgraded'
                                     toggles state="3"
-                                    on-click='setState'
+                                    on-tap='setState'
                                     disabled='[[!_canReset]]'>
                                     <ha-icon icon="mdi:lock-reset"></ha-icon>
                                 </button>
@@ -96,7 +96,7 @@ class AlarmGroups extends Polymer.Element {
                                     title='Abort set'
                                     class='mdc-button mdc-button--raised mdc-ripple-upgraded'
                                     toggles state="4"
-                                    on-click='setState'
+                                    on-tap='setState'
                                     disabled='[[!_canAbort]]'>A
                                     <ha-icon icon="mdi:shield-alert"></ha-icon>
                                 </button>
@@ -108,7 +108,7 @@ class AlarmGroups extends Polymer.Element {
                                     title='Force set'
                                     class='mdc-button mdc-button--raised mdc-ripple-upgraded'
                                     toggles state="5"
-                                    on-click='setState'
+                                    on-tap='setState'
                                     disabled='[[!_canForce]]'>
                                     <ha-icon icon="mdi:debug-step-over"></ha-icon>
                                 </button>
