@@ -39,7 +39,7 @@ class AlarmGroups extends Polymer.Element {
             </style>
             
             <hui-generic-entity-row hass="[[hass]]" config="[[_config]]">
-                <div class='flex-container' on-click="stopPropagation">
+                <div class='flex-container' on-tap="stopPropagation">
                     <div class='groupstate'>
 
                         <template is='dom-if' if='{{_allowUnset}}'>
