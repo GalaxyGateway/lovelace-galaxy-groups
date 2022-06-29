@@ -326,6 +326,7 @@ class AlarmGroups extends Polymer.Element {
     }
 
     stopPropagation(e) {
+        e.preventDefault();
         e.stopPropagation();
     }
 
