@@ -7,7 +7,7 @@ In HACS add a custom repository:
   Set category to: lovelace
 ```
 
-Through the dashboard editor manually add a card and set the below config:
+Through the dashboard editor manually add a card and set the below example config:
 ```
 type: entities
 title: Group state
@@ -19,15 +19,17 @@ entities:
     unique_id: 'ABCDEF'
     name: Group A1
     group: A1
+    allow_night: false
 ```
 Optional:
 ```
-    allow_unset: true
-    allow_set: true
-    allow_part: true
-    allow_reset: true
-    allow_abort: true
-    allow_force: true
+    allow_unset: true / false
+    allow_set: true / false
+    allow_part: true / false
+    allow_night: true / false
+    allow_reset: true / false
+    allow_abort: true / false
+    allow_force: true / false
 ```
 Set ABCDEF to the uniqueid of the module.
 
@@ -42,4 +44,3 @@ Other usefull cards:
 - https://github.com/royto/logbook-card
 
 ![Image of HA interface](https://github.com/GalaxyGateway/HA-Cards/blob/main/screenshot/screenshot1.png)
-
