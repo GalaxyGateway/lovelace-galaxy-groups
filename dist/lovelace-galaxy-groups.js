@@ -358,16 +358,15 @@ class AlarmGroups extends Polymer.Element {
     }
 
 	stopPropagation(e) {
-	      const e = ev || window.event;
-	      if (e.preventDefault) {
-		e.preventDefault();
-	      }
-	      if (e.stopPropagation) {
-		e.stopPropagation();
-	      }
-	      e.cancelBubble = true;
-	      e.returnValue = false;
-	      return false;
+		if (e.preventDefault) {
+			e.preventDefault();
+		}
+		if (e.stopPropagation) {
+			e.stopPropagation();
+		}
+		e.cancelBubble = true;
+		e.returnValue = false;
+		return false;
 	}
 
     setState(e) {
