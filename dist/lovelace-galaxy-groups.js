@@ -6,7 +6,7 @@ window.customCards.push({
   name: "Galaxy Group control",
   description: "A group control card for Honeywell Galaxy.",
   preview: true,
-  documentationURL: "https://github.com/GalaxyGateway/lovelace-galaxy-virtualkeypad",
+  documentationURL: "https://github.com/GalaxyGateway/lovelace-galaxy-groups",
 });
 
 class AlarmGroups extends Polymer.Element {
