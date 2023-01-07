@@ -370,7 +370,6 @@ class AlarmGroups extends Polymer.Element {
 	}
 
     setState(e) {
-	e.stopPropagation;
         const newState = e.currentTarget.getAttribute('state');
 
         this.hass.callService('mqtt', 'publish', {
