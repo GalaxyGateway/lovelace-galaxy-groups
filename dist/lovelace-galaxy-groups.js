@@ -44,7 +44,6 @@ class AlarmGroups extends Polymer.Element {
                                 on-click='setState'
                                 style='cursor: pointer;'
                                 disabled='[[!_canUnset]]'>
-                                <ha-icon icon="mdi:home-alert"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
@@ -57,7 +56,6 @@ class AlarmGroups extends Polymer.Element {
                                 on-click='setState'
                                 style='cursor: pointer;'
                                 disabled='[[!_canSet]]'>
-                                <ha-icon icon="mdi:shield-lock"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
@@ -70,7 +68,6 @@ class AlarmGroups extends Polymer.Element {
                                 style='cursor: pointer;'
                                 on-click='setState'
                                 disabled='[[!_canPart]]'>
-                                <ha-icon icon="mdi:shield-home"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
@@ -83,7 +80,6 @@ class AlarmGroups extends Polymer.Element {
                                 style='cursor: pointer;'
                                 on-click='setState'
                                 disabled='[[!_canNight]]'>
-                                <ha-icon icon="mdi:shield-moon"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
@@ -96,7 +92,6 @@ class AlarmGroups extends Polymer.Element {
                                 style='cursor: pointer;'
                                 on-click='setState'
                                 disabled='[[!_canReset]]'>
-                                <ha-icon icon="mdi:lock-reset"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
@@ -108,8 +103,7 @@ class AlarmGroups extends Polymer.Element {
                                 toggles state="4"
                                 style='cursor: pointer;'
                                 on-click='setState'
-                                disabled='[[!_canAbort]]'>A
-                                <ha-icon icon="mdi:shield-alert"></ha-icon>
+                                disabled='[[!_canAbort]]'>
                             </ha-icon-button>
                         </template>
                     </template>
@@ -122,7 +116,6 @@ class AlarmGroups extends Polymer.Element {
                                 style='cursor: pointer;'
                                 on-click='setState'
                                 disabled='[[!_canForce]]'>
-                                <ha-icon icon="mdi:debug-step-over"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
