@@ -37,7 +37,7 @@ class AlarmGroups extends Polymer.Element {
 
                     <template is='dom-if' if='{{_allowUnset}}'>
                         <template is='dom-if' if='{{_canUnset}}'>
-                            <ha-icon-button
+                            <button
                                 title='Unset'
                                 class='mode'
                                 toggles state="0"
@@ -45,12 +45,12 @@ class AlarmGroups extends Polymer.Element {
                                 style='cursor: pointer;'
                                 disabled='[[!_canUnset]]'>
                                 <ha-icon icon="mdi:home-alert"></ha-icon>
-                            </ha-icon-button>
+                            </button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowSet}}'>
                         <template is='dom-if' if='{{_canSet}}'>
-                            <ha-icon-button
+                            <button
                                 title='Full set'
                                 class='mode'
                                 toggles state="1"
@@ -58,12 +58,12 @@ class AlarmGroups extends Polymer.Element {
                                 style='cursor: pointer;'
                                 disabled='[[!_canSet]]'>
                                 <ha-icon icon="mdi:shield-lock"></ha-icon>
-                            </ha-icon-button>
+                            </button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowPart}}'>
                         <template is='dom-if' if='{{_canPart}}'>
-                            <ha-icon-button
+                            <button
                                 title='Part set'
                                 class='mode'
                                 toggles state="2"
@@ -71,12 +71,12 @@ class AlarmGroups extends Polymer.Element {
                                 on-click='setState'
                                 disabled='[[!_canPart]]'>
                                 <ha-icon icon="mdi:shield-home"></ha-icon>
-                            </ha-icon-button>
+                            </button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowNight}}'>
                         <template is='dom-if' if='{{_canNight}}'>
-                            <ha-icon-button
+                            <button
                                 title='Night set'
                                 class='mode'
                                 toggles state="6"
@@ -84,12 +84,12 @@ class AlarmGroups extends Polymer.Element {
                                 on-click='setState'
                                 disabled='[[!_canNight]]'>
                                 <ha-icon icon="mdi:shield-moon"></ha-icon>
-                            </ha-icon-button>
+                            </button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowReset}}'>
                         <template is='dom-if' if='{{_canReset}}'>
-                            <ha-icon-button
+                            <button
                                 title='System reset'
                                 class='mode'
                                 toggles state="3"
@@ -97,12 +97,12 @@ class AlarmGroups extends Polymer.Element {
                                 on-click='setState'
                                 disabled='[[!_canReset]]'>
                                 <ha-icon icon="mdi:lock-reset"></ha-icon>
-                            </ha-icon-button>
+                            </button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowAbort}}'>
                         <template is='dom-if' if='{{_canAbort}}'>
-                            <ha-icon-button
+                            <button
                                 title='Abort set'
                                 class='mode'
                                 toggles state="4"
@@ -110,12 +110,12 @@ class AlarmGroups extends Polymer.Element {
                                 on-click='setState'
                                 disabled='[[!_canAbort]]'>A
                                 <ha-icon icon="mdi:shield-alert"></ha-icon>
-                            </ha-icon-button>
+                            </button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowForce}}'>
                         <template is='dom-if' if='{{_canForce}}'>
-                            <ha-icon-button
+                            <button
                                 title='Force set'
                                 class='mode'
                                 toggles state="5"
@@ -123,7 +123,7 @@ class AlarmGroups extends Polymer.Element {
                                 on-click='setState'
                                 disabled='[[!_canForce]]'>
                                 <ha-icon icon="mdi:debug-step-over"></ha-icon>
-                            </ha-icon-button>
+                            </button>
                         </template>
                     </template>
 
