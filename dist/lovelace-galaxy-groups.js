@@ -108,7 +108,7 @@ class AlarmGroups extends Polymer.Element {
                                 toggles state="4"
                                 style='cursor: pointer;'
                                 on-click='setState'
-                                disabled='[[!_canAbort]]'>A
+                                disabled='[[!_canAbort]]'>
                                 <ha-icon icon="mdi:shield-alert"></ha-icon>
                             </button>
                         </template>
