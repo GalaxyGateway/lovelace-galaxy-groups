@@ -38,169 +38,160 @@ class AlarmGroups extends Polymer.Element {
                     <template is='dom-if' if='{{_allowUnset}}'>
                         <template is='dom-if' if='{{_canUnset}}'>
                             <ha-icon-button
-                                title='Unset'
                                 class='mode'
                                 toggles state="0"
                                 on-click='setState'
                                 style='cursor: pointer;'
                                 disabled='[[!_canUnset]]'>
+                                <ha-icon icon="mdi:home-alert"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowSet}}'>
                         <template is='dom-if' if='{{_canSet}}'>
                             <ha-icon-button
-                                title='Full set'
                                 class='mode'
                                 toggles state="1"
                                 on-click='setState'
                                 style='cursor: pointer;'
                                 disabled='[[!_canSet]]'>
+                                <ha-icon icon="mdi:shield-lock"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowPart}}'>
                         <template is='dom-if' if='{{_canPart}}'>
                             <ha-icon-button
-                                title='Part set'
                                 class='mode'
                                 toggles state="2"
                                 style='cursor: pointer;'
                                 on-click='setState'
                                 disabled='[[!_canPart]]'>
+                                <ha-icon icon="mdi:shield-home"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowNight}}'>
                         <template is='dom-if' if='{{_canNight}}'>
                             <ha-icon-button
-                                title='Night set'
                                 class='mode'
                                 toggles state="6"
                                 style='cursor: pointer;'
                                 on-click='setState'
                                 disabled='[[!_canNight]]'>
+                                <ha-icon icon="mdi:shield-moon"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowReset}}'>
                         <template is='dom-if' if='{{_canReset}}'>
                             <ha-icon-button
-                                title='System reset'
                                 class='mode'
                                 toggles state="3"
                                 style='cursor: pointer;'
                                 on-click='setState'
                                 disabled='[[!_canReset]]'>
+                                <ha-icon icon="mdi:lock-reset"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowAbort}}'>
                         <template is='dom-if' if='{{_canAbort}}'>
                             <ha-icon-button
-                                title='Abort set'
                                 class='mode'
                                 toggles state="4"
                                 style='cursor: pointer;'
                                 on-click='setState'
-                                disabled='[[!_canAbort]]'>
+                                disabled='[[!_canAbort]]'>A
+                                <ha-icon icon="mdi:shield-alert"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
                     <template is='dom-if' if='{{_allowForce}}'>
                         <template is='dom-if' if='{{_canForce}}'>
                             <ha-icon-button
-                                title='Force set'
                                 class='mode'
                                 toggles state="5"
                                 style='cursor: pointer;'
                                 on-click='setState'
                                 disabled='[[!_canForce]]'>
+                                <ha-icon icon="mdi:debug-step-over"></ha-icon>
                             </ha-icon-button>
                         </template>
                     </template>
 
                     <template is='dom-if' if='{{_isUnset}}'>
-                        <button
-                            title='Fail to set'
+                        <ha-icon-button
                             class='mode'
                             style='[[_isUnsetColor]]'
                             disabled='true'>
                             <ha-icon icon="mdi:home-alert"></ha-icon>
-                        </button>
+                        </ha-icon-button>
                     </template>
                     <template is='dom-if' if='{{_isSet}}'>
-                        <button
-                            title='Full set'
+                        <ha-icon-button
                             class='mode'
                             style='[[_isSetColor]]'
                             disabled='true'>
                             <ha-icon icon="mdi:shield-lock"></ha-icon>
-                        </button>
+                        </ha-icon-button>
                     </template>
                     <template is='dom-if' if='{{_isPart}}'>
-                        <button
-                            title='Part set'
+                        <ha-icon-button
                             class='mode'
                             style='[[_isPartColor]]'
                             disabled='true'>
                             <ha-icon icon="mdi:shield-home"></ha-icon>
-                        </button>
+                        </ha-icon-button>
                     </template>
                     <template is='dom-if' if='{{_isNight}}'>
-                        <button
-                            title='Night set'
+                        <ha-icon-button
                             class='mode'
                             style='[[_isNightColor]]'
                             disabled='true'>
                             <ha-icon icon="mdi:shield-moon"></ha-icon>
-                        </button>
+                        </ha-icon-button>
                     </template>
                     <template is='dom-if' if='{{_isReady}}'>
-                        <button
-                            title='Ready to set'
+                        <ha-icon-button
                             class='mode'
                             style='[[_isReadyColor]]'
                             disabled='true'>
                             <ha-icon icon="mdi:shield-check"></ha-icon>
-                        </button>
+                        </ha-icon-button>
                     </template>
                     <template is='dom-if' if='{{_isLocked}}'>
-                        <button
-                            title='Time locked'
+                        <ha-icon-button
                             class='mode'
                             style='[[_isLockedColor]]'
                             disabled='true'>
                             <ha-icon icon="mdi:clock-alert-outline"></ha-icon>
-                        </button>
+                        </ha-icon-button>
                     </template>
 
                     <template is='dom-if' if='{{_isNormal}}'>
-                        <button
-                            title='Normal'
+                        <ha-icon-button
                             class='mode'
                             style='[[_isNormalColor]]'
                             disabled='true'>
                             <ha-icon icon="mdi:alarm-light-outline"></ha-icon>
-                        </button>
+                        </ha-icon-button>
                     </template>
                     <template is='dom-if' if='{{_isAlarm}}'>
-                        <button
-                            title='Alarm'
+                        <ha-icon-button
                             class='mode'
                             style='[[_isAlarmColor]]'
                             disabled='true'>
                             <ha-icon icon="mdi:alarm-light"></ha-icon>
-                        </button>
+                        </ha-icon-button>
                     </template>
                     <template is='dom-if' if='{{_isReset}}'>
-                        <button
-                            title='Reset required'
+                        <ha-icon-button
                             class='mode'
                             style='[[_isResetColor]]'
                             disabled='true'>
                             <ha-icon icon="mdi:shield-alert"></ha-icon>
-                        </button>
+                        </ha-icon-button>
                     </template>
 
                 </div>
