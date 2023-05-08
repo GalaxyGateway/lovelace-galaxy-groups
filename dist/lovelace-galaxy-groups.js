@@ -143,6 +143,12 @@ class AlarmGroups extends LitElement {
 		this.shadowRoot.getElementById('button-container').addEventListener('click', (ev) => ev.stopPropagation());
 	}
 	
+	// updated(changedProperties) {
+	// 	if (changedProperties.has("hass")) {
+	// 		this.hassChanged();
+	// 	}
+	// }
+
     hassChanged(hass) {
 
         const config = this._config;
@@ -229,7 +235,7 @@ class AlarmGroups extends LitElement {
     }
 	
 	setState(e) {
-		e.stopPropagation();
+		// e.stopPropagation();
         const newState = e.currentTarget.getAttribute('state');
 
         this.hass.callService('mqtt', 'publish', {
@@ -244,3 +250,4 @@ class AlarmGroups extends LitElement {
 }
 	
 customElements.define('lovelace-galaxy-groups', AlarmGroups);
+
