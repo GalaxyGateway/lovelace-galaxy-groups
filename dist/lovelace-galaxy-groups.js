@@ -144,7 +144,7 @@ class AlarmGroups extends LitElement {
 
         const config = this._config;
 
-        const stateObjS = hass.states[config.entity];
+        const stateObjS = this.hass.states[config.entity];
 
         let isUnsetColor;
 		let isSetColor;
@@ -160,7 +160,7 @@ class AlarmGroups extends LitElement {
         isLockedColor = (stateObjS.state === '4') ? 'color:red;' : '';
 		isNightColor = (stateObjS.state === '5') ? 'color:orange;' : '';
 
-        const stateObjA = hass.states[config.entity_alarm];
+        const stateObjA = this.hass.states[config.entity_alarm];
 
         let isNormalColor;
 		let isAlarmColor;
