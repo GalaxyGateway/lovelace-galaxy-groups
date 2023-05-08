@@ -43,7 +43,7 @@ class AlarmGroups extends LitElement {
                         class='mode'
 						style='cursor: pointer;'
 						toggles state="0"
-						@click=${this.setState}
+						@click="${this.setState}"
 						.disabled=${!this._canUnset}>
                         <ha-icon icon="mdi:home-alert"></ha-icon></button>
 
@@ -52,7 +52,7 @@ class AlarmGroups extends LitElement {
 						class='mode'
 						style='cursor: pointer;'
 						toggles state="1"
-						@click=${this.setState}
+						@click="${this.setState}"
 						.disabled=${!this._canSet}>
                         <ha-icon icon="mdi:shield-lock"></ha-icon></button>
 
@@ -61,7 +61,7 @@ class AlarmGroups extends LitElement {
 						class='mode'
 						style='cursor: pointer;'
 						toggles state="2"
-						@click=${this.setState}
+						@click="${this.setState}"
 						.disabled=${this._canPartSet}>
                         <ha-icon icon="mdi:shield-home"></ha-icon></button>
 
@@ -70,7 +70,7 @@ class AlarmGroups extends LitElement {
 						class='mode'
 						style='cursor: pointer;'
 						toggles state="6"
-						@click=${this.setState}
+						@click="${this.setState}"
 						.disabled=${this._canNightSet}>
                         <ha-icon icon="mdi:shield-moon"></ha-icon></button>
 
