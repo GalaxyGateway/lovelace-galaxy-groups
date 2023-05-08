@@ -44,7 +44,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="0"
 						@click=${this.setState}
-						.disabled=${this._canUnset}>
+						.disabled=${!this._canUnset}>
                         <ha-icon icon="mdi:home-alert"></ha-icon></button>
 
                     <button
@@ -53,7 +53,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="1"
 						@click=${this.setState}
-						.disabled=${this._canSet}>
+						.disabled=${!this._canSet}>
                         <ha-icon icon="mdi:shield-lock"></ha-icon></button>
 
                     <button
@@ -62,7 +62,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="2"
 						@click=${this.setState}
-						.disabled=${this._canPartSet}>
+						.disabled=${!this._canPartSet}>
                         <ha-icon icon="mdi:shield-home"></ha-icon></button>
 
                     <button
@@ -71,7 +71,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="6"
 						@click=${this.setState}
-						.disabled=${this._canNightSet}>
+						.disabled=${!this._canNightSet}>
                         <ha-icon icon="mdi:shield-moon"></ha-icon></button>
 
 
@@ -143,12 +143,6 @@ class AlarmGroups extends LitElement {
 		this.shadowRoot.getElementById('button-container').addEventListener('click', (ev) => ev.stopPropagation());
 	}
 	
-	// updated(changedProperties) {
-	// 	if (changedProperties.has("hass")) {
-	// 		this.hassChanged();
-	// 	}
-	// }
-
     hassChanged(hass) {
 
         const config = this._config;
@@ -235,6 +229,7 @@ class AlarmGroups extends LitElement {
     }
 	
 	setState(e) {
+		e.stopPropagation();
         const newState = e.currentTarget.getAttribute('state');
 
         this.hass.callService('mqtt', 'publish', {
