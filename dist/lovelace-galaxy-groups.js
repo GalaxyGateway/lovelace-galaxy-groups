@@ -62,7 +62,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="2"
 						@click="${this.setState}"
-						.disabled=${this._canPartSet}>
+						.disabled=${this._canPart}>
                         <ha-icon icon="mdi:shield-home"></ha-icon></button>
 
                     <button
@@ -71,7 +71,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="6"
 						@click="${this.setState}"
-						.disabled=${!this._canNightSet}>
+						.disabled=${!this._canNight}>
                         <ha-icon icon="mdi:shield-moon"></ha-icon></button>
 
 
@@ -135,6 +135,10 @@ class AlarmGroups extends LitElement {
 		if (!config.entity) {
 			throw new Error("You need to define an entity");
 		}
+		this._canUnset = true;
+		this._canSet = true;
+		this._canPart = true;
+		this._canNight = false;
 		this._config = { ...this._config, ...config };
 	}
 
