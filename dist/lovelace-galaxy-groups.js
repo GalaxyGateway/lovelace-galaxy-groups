@@ -37,45 +37,46 @@ class AlarmGroups extends LitElement {
 	render() {
 		return html`
 			<hui-generic-entity-row .hass="${this.hass}" .config="${this._config}">
+				${this._canUnset ? html`
 				<div id='button-container' class='horizontal justified layout'>
 					<button
                         title='Unset'
                         class='mode'
 						style='cursor: pointer;'
 						toggles state="0"
-						@click="${this.setState}"
-						.disabled=${this._canUnset}>
-                        <ha-icon icon="mdi:home-alert"></ha-icon></button>
+						@click="${this.setState}">
+                        <ha-icon icon="mdi:home-alert"></ha-icon></button>}
+						` : html ``}
 
-                    <button
+					${this._canSet ? html`
+					<button
                         title='Full set'
 						class='mode'
 						style='cursor: pointer;'
 						toggles state="1"
-						@click="${this.setState}"
-						.disabled=${this._canSet}>
+						@click="${this.setState}">
                         <ha-icon icon="mdi:shield-lock"></ha-icon></button>
+						` : html ``}
 
-                    <button
+					${this._canPart ? html`
+					<button
                         title='Part set'
 						class='mode'
 						style='cursor: pointer;'
 						toggles state="2"
-						@click="${this.setState}"
-						.disabled=${this._canPart}>
+						@click="${this.setState}">
                         <ha-icon icon="mdi:shield-home"></ha-icon></button>
+						` : html ``}
 
-                    <button
+					${this._canNight ? html`
+					<button
                         title='Night set'
 						class='mode'
 						style='cursor: pointer;'
 						toggles state="6"
-						@click="${this.setState}"
-						.disabled=${!this._canNight}>
+						@click="${this.setState}">
                         <ha-icon icon="mdi:shield-moon"></ha-icon></button>
-
-
-
+						` : html ``}
 
                 </div>
 			</hui-generic-entity-row>
@@ -135,10 +136,10 @@ class AlarmGroups extends LitElement {
 		if (!config.entity) {
 			throw new Error("You need to define an entity");
 		}
-		this._canUnset = true;
-		this._canSet = true;
-		this._canPart = true;
-		this._canNight = false;
+		// this._canUnset = true;
+		// this._canSet = true;
+		// this._canPart = true;
+		// this._canNight = false;
 		this._config = { ...this._config, ...config };
 	}
 
