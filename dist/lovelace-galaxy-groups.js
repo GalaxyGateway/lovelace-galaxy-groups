@@ -35,7 +35,6 @@ class AlarmGroups extends LitElement {
 	}
 
 	render() {
-		this.hassChanged();
 		return html`
 			<hui-generic-entity-row .hass="${this.hass}" .config="${this._config}">
 				<div id='button-container' class='horizontal justified layout'>
@@ -45,6 +44,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="0"
 						@click=${this.setState}
+						.disabled=${!this._canUnset}>
                         <ha-icon icon="mdi:home-alert"></ha-icon></button>
 
                     <button
@@ -53,6 +53,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="1"
 						@click=${this.setState}
+						.disabled=${!this._canSet}>
                         <ha-icon icon="mdi:shield-lock"></ha-icon></button>
 
                     <button
@@ -61,6 +62,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="2"
 						@click=${this.setState}
+						.disabled=${!this._canPartSet}>
                         <ha-icon icon="mdi:shield-home"></ha-icon></button>
 
                     <button
@@ -69,6 +71,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="6"
 						@click=${this.setState}
+						.disabled=${!this._canNightSet}>
                         <ha-icon icon="mdi:shield-moon"></ha-icon></button>
 
 
@@ -160,7 +163,7 @@ class AlarmGroups extends LitElement {
         isLockedColor = (stateObjS.state === '4') ? 'color:red;' : '';
 		isNightColor = (stateObjS.state === '5') ? 'color:orange;' : '';
 
-        const stateObjA = this.hass.states[config.entity_alarm];
+        const stateObjA = this.states[config.entity_alarm];
 
         let isNormalColor;
 		let isAlarmColor;
@@ -186,45 +189,43 @@ class AlarmGroups extends LitElement {
         allow_force = (config.allow_force != null) ? config.allow_force : true;
         allow_night = (config.allow_night != null) ? config.allow_night : true;
 
-        this.setProperties({
-            _stateObjS: stateObjS,
-            _allowUnset: allow_unset,
-            _allowSet: allow_set,
-            _allowPart: allow_part,
-            _allowReset: allow_reset,
-            _allowAbort: allow_abort,
-            _allowForce: allow_force,
-            _allowNight: allow_night,
-            _isUnset: stateObjS.state === '0',
-            _isSet: stateObjS.state === '1',
-            _isPart: stateObjS.state === '2',
-            _isReady: stateObjS.state === '3' || stateObjS.state === 'unknown',
-            _isLocked: stateObjS.state === '4',
-            _isNight: stateObjS.state === '5',
-            _isUnsetColor: isUnsetColor,
-            _isSetColor: isSetColor,
-            _isPartColor: isPartColor,
-            _isReadyColor: isReadyColor,
-            _isLockedColor: isLockedColor,
-            _isNightColor: isNightColor,
+            this._stateObjS = stateObjS,
+            this._allowUnset = allow_unset,
+            this._allowSet = allow_set,
+            this._allowPart = allow_part,
+            this._allowReset = allow_reset,
+            this._allowAbort = allow_abort,
+            this._allowForce = allow_force,
+            this._allowNight = allow_night,
+            this._isUnset = stateObjS.state === '0',
+            this._isSet = stateObjS.state === '1',
+            this._isPart = stateObjS.state === '2',
+            this._isReady = stateObjS.state === '3' || stateObjS.state === 'unknown',
+            this._isLocked = stateObjS.state === '4',
+            this._isNight = stateObjS.state === '5',
+            this._isUnsetColor = isUnsetColor,
+            this._isSetColor = isSetColor,
+            this._isPartColor = isPartColor,
+            this._isReadyColor = isReadyColor,
+            this._isLockedColor = isLockedColor,
+            this._isNightColor = isNightColor,
 
-            _stateObjA: stateObjA,
-            _isNormal: stateObjA.state === '0' || stateObjA.state === 'unknown',
-            _isAlarm: stateObjA.state === '1',
-            _isReset: stateObjA.state === '2',
-            _isNormalColor: isNormalColor,
-            _isAlarmColor: isAlarmColor,
-            _isResetColor: isResetColor,
+            this._stateObjA = stateObjA,
+            this._isNormal = stateObjA.state === '0' || stateObjA.state === 'unknown',
+            this._isAlarm = stateObjA.state === '1',
+            this._isReset = stateObjA.state === '2',
+            this._isNormalColor = isNormalColor,
+            this._isAlarmColor = isAlarmColor,
+            this._isResetColor = isResetColor,
 
-            _canUnset: stateObjS.state === '1' || stateObjS.state === '2' || stateObjS.state === '5',
-            _canSet: (stateObjS.state === '3' || stateObjS.state === 'unknown') && (stateObjA.state === '0' || stateObjA.state === 'unknown' || stateObjA.state === '2'),
-            _canPart: (stateObjS.state === '3' || stateObjS.state === 'unknown') && (stateObjA.state === '0' || stateObjA.state === 'unknown' || stateObjA.state === '2'),
-            _canNight: (stateObjS.state === '3' || stateObjS.state === 'unknown') && (stateObjA.state === '0' || stateObjA.state === 'unknown' || stateObjA.state === '2'),
-            _canReset: stateObjA.state === '2' || stateObjA.state === '1',
-            _canAbort: false,
-            _canForce: stateObjS.state === '0'
+            this._canUnset = stateObjS.state === '1' || stateObjS.state === '2' || stateObjS.state === '5',
+            this._canSet = (stateObjS.state === '3' || stateObjS.state === 'unknown') && (stateObjA.state === '0' || stateObjA.state === 'unknown' || stateObjA.state === '2'),
+            this._canPart = (stateObjS.state === '3' || stateObjS.state === 'unknown') && (stateObjA.state === '0' || stateObjA.state === 'unknown' || stateObjA.state === '2'),
+            this._canNight = (stateObjS.state === '3' || stateObjS.state === 'unknown') && (stateObjA.state === '0' || stateObjA.state === 'unknown' || stateObjA.state === '2'),
+            this._canReset = stateObjA.state === '2' || stateObjA.state === '1',
+            this._canAbort = false,
+            this._canForce = stateObjS.state === '0'
 
-        });
     }
 	
 	setState(e) {
@@ -241,6 +242,5 @@ class AlarmGroups extends LitElement {
         return 1;
     }
 }
-
+	
 customElements.define('lovelace-galaxy-groups', AlarmGroups);
-
