@@ -37,8 +37,8 @@ class AlarmGroups extends LitElement {
 	render() {
 		return html`
 			<hui-generic-entity-row .hass="${this.hass}" .config="${this._config}">
-				${this._canUnset ? html`
 				<div id='button-container' class='horizontal justified layout'>
+					${this._canUnset ? html`
 					<button
                         title='Unset'
                         class='mode'
@@ -136,10 +136,6 @@ class AlarmGroups extends LitElement {
 		if (!config.entity) {
 			throw new Error("You need to define an entity");
 		}
-		// this._canUnset = true;
-		// this._canSet = true;
-		// this._canPart = true;
-		// this._canNight = false;
 		this._config = { ...this._config, ...config };
 	}
 
@@ -148,6 +144,12 @@ class AlarmGroups extends LitElement {
 		this.shadowRoot.getElementById('button-container').addEventListener('click', (ev) => ev.stopPropagation());
 	}
 	
+	updated(changedProperties) {
+		if (changedProperties.has("hass")) {
+			this.hassChanged();
+		}
+	}
+
     hassChanged(hass) {
 
         const config = this._config;
