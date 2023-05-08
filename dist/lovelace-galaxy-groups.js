@@ -44,7 +44,6 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="0"
 						@click=${this.setState}
-						.disabled=${!this._canUnset}>
                         <ha-icon icon="mdi:home-alert"></ha-icon></button>
 
                     <button
@@ -53,7 +52,6 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="1"
 						@click=${this.setState}
-						.disabled=${!this._canSet}>
                         <ha-icon icon="mdi:shield-lock"></ha-icon></button>
 
                     <button
@@ -62,7 +60,6 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="2"
 						@click=${this.setState}
-						.disabled=${!this._canPartSet}>
                         <ha-icon icon="mdi:shield-home"></ha-icon></button>
 
                     <button
@@ -71,11 +68,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="6"
 						@click=${this.setState}
-						.disabled=${!this._canNightSet}>
                         <ha-icon icon="mdi:shield-moon"></ha-icon></button>
-
-
-
 
                 </div>
 			</hui-generic-entity-row>
@@ -235,7 +228,6 @@ class AlarmGroups extends LitElement {
     }
 	
 	setState(e) {
-		// e.stopPropagation();
         const newState = e.currentTarget.getAttribute('state');
 
         this.hass.callService('mqtt', 'publish', {
@@ -250,4 +242,3 @@ class AlarmGroups extends LitElement {
 }
 	
 customElements.define('lovelace-galaxy-groups', AlarmGroups);
-
