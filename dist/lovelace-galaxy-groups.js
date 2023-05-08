@@ -1,5 +1,9 @@
 console.info("%c  lovelace-galaxy-groups  \n%c Version 0.0.3 ", "color: orange; font-weight: bold; background: black", "color: white; font-weight: bold; background: dimgray");
 
+const LitElement = customElements.get("ha-panel-lovelace") ? Object.getPrototypeOf(customElements.get("ha-panel-lovelace")) : Object.getPrototypeOf(customElements.get("hc-lovelace"));
+const html = LitElement.prototype.html;
+const css = LitElement.prototype.css;
+
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "lovelace-galaxy-groups",
@@ -9,210 +13,74 @@ window.customCards.push({
   documentationURL: "https://github.com/GalaxyGateway/lovelace-galaxy-groups",
 });
 
-class AlarmGroups extends Polymer.Element {
+class AlarmGroups extends LitElement {
+	static get styles() {
+		return css`
+            :host {
+                line-height: inherit;
+            }
+            .mode {
+                margin-left: 2px;
+                margin-right: 2px;
+                background-color:'var(--dark-accent-color)';
+                border: 1px var(--dark-theme-disabled-color);
+                border-radius: 4px;
+                font-size: 10px !important;
+                color: inherit;
+                text-align: center;
+                float: right !important;
+                padding: 0px;
+            }
+		`
+	}
 
-    static get template() {
-        return Polymer.html`
-            <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
-            <style>
-                :host {
-                    line-height: inherit;
-                }
-                .mode {
-                    margin-left: 2px;
-                    margin-right: 2px;
-                    background-color:'var(--dark-accent-color)';
-	                border: 1px var(--dark-theme-disabled-color);
-                    border-radius: 4px;
-                    font-size: 10px !important;
-                    color: inherit;
-                    text-align: center;
-                    float: right !important;
-                    padding: 0px;
-                }
-            </style>
+	render() {
+		this.hassChanged();
+		return html`
+			<hui-generic-entity-row .hass="${this.hass}" .config="${this._config}">
+				<div id='button-container' class='horizontal justified layout'>
+					<button
+                        title='Unset'
+                        class='mode'
+						style='cursor: pointer;'
+						toggles state="0"
+						@click=${this.setState}
+						.disabled=${!this._canUnset}>
+                        <ha-icon icon="mdi:home-alert"></ha-icon></button>
 
-            <hui-generic-entity-row hass="[[hass]]" config="[[_config]]">
-                <div class='horizontal justified layout' on-click="stopPropagation">
+                    <button
+                        title='Full set'
+						class='mode'
+						style='cursor: pointer;'
+						toggles state="1"
+						@click=${this.setState}
+						.disabled=${!this._canSet}>
+                        <ha-icon icon="mdi:shield-lock"></ha-icon></button>
 
-                    <template is='dom-if' if='{{_allowUnset}}'>
-                        <template is='dom-if' if='{{_canUnset}}'>
-                            <button
-                                title='Unset'
-                                class='mode'
-                                toggles state="0"
-                                on-click='setState'
-                                style='cursor: pointer;'
-                                disabled='[[!_canUnset]]'>
-                                <ha-icon icon="mdi:home-alert"></ha-icon>
-                            </button>
-                        </template>
-                    </template>
-                    <template is='dom-if' if='{{_allowSet}}'>
-                        <template is='dom-if' if='{{_canSet}}'>
-                            <button
-                                title='Full set'
-                                class='mode'
-                                toggles state="1"
-                                on-click='setState'
-                                style='cursor: pointer;'
-                                disabled='[[!_canSet]]'>
-                                <ha-icon icon="mdi:shield-lock"></ha-icon>
-                            </button>
-                        </template>
-                    </template>
-                    <template is='dom-if' if='{{_allowPart}}'>
-                        <template is='dom-if' if='{{_canPart}}'>
-                            <button
-                                title='Part set'
-                                class='mode'
-                                toggles state="2"
-                                style='cursor: pointer;'
-                                on-click='setState'
-                                disabled='[[!_canPart]]'>
-                                <ha-icon icon="mdi:shield-home"></ha-icon>
-                            </button>
-                        </template>
-                    </template>
-                    <template is='dom-if' if='{{_allowNight}}'>
-                        <template is='dom-if' if='{{_canNight}}'>
-                            <button
-                                title='Night set'
-                                class='mode'
-                                toggles state="6"
-                                style='cursor: pointer;'
-                                on-click='setState'
-                                disabled='[[!_canNight]]'>
-                                <ha-icon icon="mdi:shield-moon"></ha-icon>
-                            </button>
-                        </template>
-                    </template>
-                    <template is='dom-if' if='{{_allowReset}}'>
-                        <template is='dom-if' if='{{_canReset}}'>
-                            <button
-                                title='System reset'
-                                class='mode'
-                                toggles state="3"
-                                style='cursor: pointer;'
-                                on-click='setState'
-                                disabled='[[!_canReset]]'>
-                                <ha-icon icon="mdi:lock-reset"></ha-icon>
-                            </button>
-                        </template>
-                    </template>
-                    <template is='dom-if' if='{{_allowAbort}}'>
-                        <template is='dom-if' if='{{_canAbort}}'>
-                            <button
-                                title='Abort set'
-                                class='mode'
-                                toggles state="4"
-                                style='cursor: pointer;'
-                                on-click='setState'
-                                disabled='[[!_canAbort]]'>
-                                <ha-icon icon="mdi:shield-alert"></ha-icon>
-                            </button>
-                        </template>
-                    </template>
-                    <template is='dom-if' if='{{_allowForce}}'>
-                        <template is='dom-if' if='{{_canForce}}'>
-                            <button
-                                title='Force set'
-                                class='mode'
-                                toggles state="5"
-                                style='cursor: pointer;'
-                                on-click='setState'
-                                disabled='[[!_canForce]]'>
-                                <ha-icon icon="mdi:debug-step-over"></ha-icon>
-                            </button>
-                        </template>
-                    </template>
+                    <button
+                        title='Part set'
+						class='mode'
+						style='cursor: pointer;'
+						toggles state="2"
+						@click=${this.setState}
+						.disabled=${!this._canPartSet}>
+                        <ha-icon icon="mdi:shield-home"></ha-icon></button>
 
-                    <template is='dom-if' if='{{_isUnset}}'>
-                        <button
-                            title='Fail to set'
-                            class='mode'
-                            style='[[_isUnsetColor]]'
-                            disabled='true'>
-                            <ha-icon icon="mdi:home-alert"></ha-icon>
-                        </button>
-                    </template>
-                    <template is='dom-if' if='{{_isSet}}'>
-                        <button
-                            title='Full set'
-                            class='mode'
-                            style='[[_isSetColor]]'
-                            disabled='true'>
-                            <ha-icon icon="mdi:shield-lock"></ha-icon>
-                        </button>
-                    </template>
-                    <template is='dom-if' if='{{_isPart}}'>
-                        <button
-                            title='Part set'
-                            class='mode'
-                            style='[[_isPartColor]]'
-                            disabled='true'>
-                            <ha-icon icon="mdi:shield-home"></ha-icon>
-                        </button>
-                    </template>
-                    <template is='dom-if' if='{{_isNight}}'>
-                        <button
-                            title='Night set'
-                            class='mode'
-                            style='[[_isNightColor]]'
-                            disabled='true'>
-                            <ha-icon icon="mdi:shield-moon"></ha-icon>
-                        </button>
-                    </template>
-                    <template is='dom-if' if='{{_isReady}}'>
-                        <button
-                            title='Ready to set'
-                            class='mode'
-                            style='[[_isReadyColor]]'
-                            disabled='true'>
-                            <ha-icon icon="mdi:shield-check"></ha-icon>
-                        </button>
-                    </template>
-                    <template is='dom-if' if='{{_isLocked}}'>
-                        <button
-                            title='Time locked'
-                            class='mode'
-                            style='[[_isLockedColor]]'
-                            disabled='true'>
-                            <ha-icon icon="mdi:clock-alert-outline"></ha-icon>
-                        </button>
-                    </template>
+                    <button
+                        title='Night set'
+						class='mode'
+						style='cursor: pointer;'
+						toggles state="6"
+						@click=${this.setState}
+						.disabled=${!this._canNightSet}>
+                        <ha-icon icon="mdi:shield-moon"></ha-icon></button>
 
-                    <template is='dom-if' if='{{_isNormal}}'>
-                        <button
-                            title='Normal'
-                            class='mode'
-                            style='[[_isNormalColor]]'
-                            disabled='true'>
-                            <ha-icon icon="mdi:alarm-light-outline"></ha-icon>
-                        </button>
-                    </template>
-                    <template is='dom-if' if='{{_isAlarm}}'>
-                        <button
-                            title='Alarm'
-                            class='mode'
-                            style='[[_isAlarmColor]]'
-                            disabled='true'>
-                            <ha-icon icon="mdi:alarm-light"></ha-icon>
-                        </button>
-                    </template>
-                    <template is='dom-if' if='{{_isReset}}'>
-                        <button
-                            title='Reset required'
-                            class='mode'
-                            style='[[_isResetColor]]'
-                            disabled='true'>
-                            <ha-icon icon="mdi:shield-alert"></ha-icon>
-                        </button>
-                    </template>
+
+
 
                 </div>
-            </hui-generic-entity-row>
-        `;
+			</hui-generic-entity-row>
+		`;
     }
 
     static get properties() {
@@ -264,12 +132,18 @@ class AlarmGroups extends Polymer.Element {
         }
     }
 
-    setConfig(config) {
-        if (!config.unique_id) throw new Error('You need to define a unique_id');
-        if (!config.group) throw new Error('You need to define a group');
-        this._config = config;
-    }
+	setConfig(config) {
+		if (!config.entity) {
+			throw new Error("You need to define an entity");
+		}
+		this._config = { ...this._config, ...config };
+	}
 
+	firstUpdated() {
+		super.firstUpdated();
+		this.shadowRoot.getElementById('button-container').addEventListener('click', (ev) => ev.stopPropagation());
+	}
+	
     hassChanged(hass) {
 
         const config = this._config;
@@ -356,20 +230,9 @@ class AlarmGroups extends Polymer.Element {
 
         });
     }
-
-	stopPropagation(e) {
-		if (e.preventDefault) {
-			e.preventDefault();
-		}
-		if (e.stopPropagation) {
-			e.stopPropagation();
-		}
-		e.cancelBubble = true;
-		e.returnValue = false;
-		return false;
-	}
-
-    setState(e) {
+	
+	setState(e) {
+		e.stopPropagation();
         const newState = e.currentTarget.getAttribute('state');
 
         this.hass.callService('mqtt', 'publish', {
@@ -378,10 +241,9 @@ class AlarmGroups extends Polymer.Element {
         });
     }
 
-    getCardSize() {
+	getCardSize() {
         return 1;
     }
-
 }
 
 customElements.define('lovelace-galaxy-groups', AlarmGroups);
