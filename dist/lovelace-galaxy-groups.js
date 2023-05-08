@@ -44,6 +44,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="0"
 						@click=${this.setState}
+						>
                         <ha-icon icon="mdi:home-alert"></ha-icon></button>
 
                     <button
@@ -52,6 +53,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="1"
 						@click=${this.setState}
+						>
                         <ha-icon icon="mdi:shield-lock"></ha-icon></button>
 
                     <button
@@ -60,6 +62,7 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="2"
 						@click=${this.setState}
+						>
                         <ha-icon icon="mdi:shield-home"></ha-icon></button>
 
                     <button
@@ -68,7 +71,11 @@ class AlarmGroups extends LitElement {
 						style='cursor: pointer;'
 						toggles state="6"
 						@click=${this.setState}
+						>
                         <ha-icon icon="mdi:shield-moon"></ha-icon></button>
+
+
+
 
                 </div>
 			</hui-generic-entity-row>
