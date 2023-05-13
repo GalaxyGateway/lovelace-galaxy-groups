@@ -1,4 +1,4 @@
-console.info("%c  lovelace-galaxy-groups  \n%c Version 0.0.3 ", "color: orange; font-weight: bold; background: black", "color: white; font-weight: bold; background: dimgray");
+console.info("%c  lovelace-galaxy-groups  \n%c Version 0.0.5", "color: orange; font-weight: bold; background: black", "color: white; font-weight: bold; background: dimgray");
 
 window.customCards = window.customCards || [];
 window.customCards.push({
@@ -13,7 +13,7 @@ const LitElement = customElements.get("ha-panel-lovelace") ? Object.getPrototype
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 
-class AlarmGroups extends LitElement {
+class CustomAlarmGroups extends LitElement {
 	constructor() {
 		super();
 	}
@@ -26,91 +26,106 @@ class AlarmGroups extends LitElement {
             .mode {
                 margin-left: 2px;
                 margin-right: 2px;
-                background-color:'var(--dark-accent-color)';
                 border: 1px var(--dark-theme-disabled-color);
                 border-radius: 4px;
                 font-size: 10px !important;
-                color: inherit;
                 text-align: center;
                 float: left !important;
                 padding: 1px;
+                width: 30px;
+                height: 30px;
             }
-		`
+            .action {
+                background-color: #03a9f4;
+                color: #FFF;
+            }
+            .box {
+				display: flex;
+				flex-direction: row;
+			}
+        `;
 	}
 
 	render() {
 		return html`
 			<hui-generic-entity-row .hass="${this.hass}" .config="${this._config}">
-				<div id='button-container' class='horizontal justified layout'>
+				<div id='button-container' class='box'>
 
 					${(this._canUnset && this._allowUnset) ? html`
 					<button
                         title='Unset'
-                        class='mode'
+                        class='mode action'
 						style='cursor: pointer;'
 						toggles state="0"
-						@click="${this.setState}">
-                        <ha-icon icon="mdi:home-alert"></ha-icon></button>
+						@click=${this.setState}>
+                        ${this._icons ? html`<ha-icon icon="mdi:home-alert"></ha-icon>` : html`UnSet`}
+                        </button>
 						` : html ``}
 
 					${(this._canSet && this._allowSet) ? html`
 					<button
                         title='Full set'
-						class='mode'
+						class='mode action'
 						style='cursor: pointer;'
 						toggles state="1"
-						@click="${this.setState}">
-                        <ha-icon icon="mdi:shield-lock"></ha-icon></button>
+						@click=${this.setState}>
+                        ${this._icons ? html`<ha-icon icon="mdi:shield-lock"></ha-icon>` : html`Set`}
+                        </button>
 						` : html ``}
 
 					${(this._canPart && this._allowPart) ? html`
 					<button
                         title='Part set'
-						class='mode'
+						class='mode action'
 						style='cursor: pointer;'
 						toggles state="2"
-						@click="${this.setState}">
-                        <ha-icon icon="mdi:shield-home"></ha-icon></button>
+						@click=${this.setState}>
+                        ${this._icons ? html`<ha-icon icon="mdi:shield-home"></ha-icon>` : html`Part`}
+                        </button>
 						` : html ``}
 
 					${(this._canNight && this._allowNight) ? html`
 					<button
                         title='Night set'
-						class='mode'
+						class='mode action'
 						style='cursor: pointer;'
 						toggles state="6"
-						@click="${this.setState}">
-                        <ha-icon icon="mdi:shield-moon"></ha-icon></button>
+						@click=${this.setState}>
+                        ${this._icons ? html`<ha-icon icon="mdi:shield-moon"></ha-icon>` : html`Night`}
+                        </button>
 						` : html ``}
 
                     ${(this._canAbort && this._allowAbort) ? html`
                     <button
                         title='Abort set'
-                        class='mode'
+                        class='mode action'
                         style='cursor: pointer;'
                         toggles state="4"
-                        @click="${this.setState}">
-                        <ha-icon icon="mdi:shield-moon"></ha-icon></button>
+                        @click=${this.setState}>
+                        ${this._icons ? html`<ha-icon icon="mdi:shield-moon"></ha-icon>` : html`Abort`}
+                        </button>
                         ` : html ``}
 
                     ${(this._canForce && this._allowForce) ? html`
                     <button
                         title='Force set'
-                        class='mode'
+                        class='mode action'
                         style='cursor: pointer;'
                         toggles state="5"
-                        @click="${this.setState}">
-                        <ha-icon icon="mdi:shield-moon"></ha-icon></button>
+                        @click=${this.setState}>
+                        ${this._icons ? html`<ha-icon icon="mdi:shield-moon"></ha-icon>` : html`Force`}
+                        </button>
                         ` : html ``}
 
                     ${(this._canReset && this._allowReset) ? html`
                     <button
                         title='Reset'
-                        class='mode'
+                        class='mode action'
                         style='cursor: pointer;'
                         toggles state="3"
-                        @click="${this.setState}">
-                        <ha-icon icon="mdi:shield-moon"></ha-icon></button>
+                        @click=${this.setState}>
+                        ${this._icons ? html`<ha-icon icon="mdi:shield-moon"></ha-icon>` : html`Reset`}
+                        </button>
                         ` : html ``}
 
 
@@ -233,6 +248,8 @@ class AlarmGroups extends LitElement {
             _isLockedColor: String,
             _isNightColor: String,
 
+            _icons: Boolean,
+
             _stateObjA: Object,
             _isNormal: Boolean,
             _isAlarm: Boolean,
@@ -323,6 +340,10 @@ class AlarmGroups extends LitElement {
         allow_force = (config.allow_force != null) ? config.allow_force : true;
         allow_night = (config.allow_night != null) ? config.allow_night : true;
 
+        let icons; 
+        icons = (config.icons != null) ? config.icons : true;
+        this._icons = icons;
+
         this._stateObjS = stateObjS;
         this._allowUnset = allow_unset;
         this._allowSet = allow_set;
@@ -376,4 +397,4 @@ class AlarmGroups extends LitElement {
     }
 }
 	
-customElements.define('lovelace-galaxy-groups', AlarmGroups);
+customElements.define('lovelace-galaxy-groups', CustomAlarmGroups);
