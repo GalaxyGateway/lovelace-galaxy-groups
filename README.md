@@ -23,6 +23,7 @@ entities:
 ```
 Optional:
 ```
+    icons: true / false
     allow_unset: true / false
     allow_set: true / false
     allow_part: true / false
