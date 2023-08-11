@@ -102,7 +102,7 @@ class CustomAlarmGroups extends LitElement {
                         style='cursor: pointer;'
                         toggles state="4"
                         @click=${this.setState}>
-                        ${this._icons ? html`<ha-icon icon="mdi:shield-moon"></ha-icon>` : html`Abort`}
+                        ${this._icons ? html`<ha-icon icon="mdi:shield-alert"></ha-icon>` : html`Abort`}
                         </button>
                         ` : html ``}
 
@@ -113,7 +113,7 @@ class CustomAlarmGroups extends LitElement {
                         style='cursor: pointer;'
                         toggles state="5"
                         @click=${this.setState}>
-                        ${this._icons ? html`<ha-icon icon="mdi:shield-moon"></ha-icon>` : html`Force`}
+                        ${this._icons ? html`<ha-icon icon="mdi:debug-step-over"></ha-icon>` : html`Force`}
                         </button>
                         ` : html ``}
 
@@ -124,7 +124,7 @@ class CustomAlarmGroups extends LitElement {
                         style='cursor: pointer;'
                         toggles state="3"
                         @click=${this.setState}>
-                        ${this._icons ? html`<ha-icon icon="mdi:shield-moon"></ha-icon>` : html`Reset`}
+                        ${this._icons ? html`<ha-icon icon="mdi:lock-reset"></ha-icon>` : html`Reset`}
                         </button>
                         ` : html ``}
 
