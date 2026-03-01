@@ -9,17 +9,15 @@ In HACS add a custom repository:
 
 Through the dashboard editor manually add a card and set the below example config:
 ```
-type: entities
-title: Group state
-show_header_toggle: false
-entities:
-  - type: custom:lovelace-galaxy-groups
-    entity: sensor.group_ABCDEF_a1_state
-    entity_alarm: sensor.group_ABCDEF_a1_alarm
-    unique_id: 'ABCDEF'
-    name: Group A1
-    group: A1
-    allow_night: false
+type: custom:lovelace-galaxy-groups
+title: Group State
+groups:
+  - entity: sensor.galaxy_gateway_ABCDEF_group_ABCDEF_a1_state
+    name: GROUP A1
+  - entity: sensor.galaxy_gateway_ABCDEF_group_ABCDEF_a2_state
+    name: GROUP A2
+  - entity: sensor.galaxy_gateway_ABCDEF_group_ABCDEF_a3_state
+    name: GROUP A3
 ```
 Optional:
 ```
