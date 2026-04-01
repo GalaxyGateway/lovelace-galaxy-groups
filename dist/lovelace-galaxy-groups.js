@@ -1,4 +1,4 @@
-console.info("%c  lovelace-galaxy-groups  \n%c Version 0.3.0", "color: orange; font-weight: bold; background: black", "color: white; font-weight: bold; background: dimgray");
+console.info("%c  lovelace-galaxy-groups  \n%c Version 0.4.0", "color: orange; font-weight: bold; background: black", "color: white; font-weight: bold; background: dimgray");
 
 window.customCards = window.customCards || [];
 window.customCards.push({
@@ -19,15 +19,25 @@ const css  = LitElement.prototype.css;
 window.GalaxyGroups = window.GalaxyGroups || {};
 
 // ─── parseEntityId ────────────────────────────────────────────────────────────
-window.GalaxyGroups.parseEntityId = function parseEntityId(entityId) {
+window.GalaxyGroups.parseEntityId = function parseEntityId(entityId, baseTopic) {
   if (!entityId) return null;
   const name = entityId.replace(/^[^.]+\./, "");
-  const match = name.match(/^galaxy_gateway_([^_]+(?:_[^_]+)*)_group_([^_]+(?:_[^_]+)*)_([^_]+)_state$/);
-  if (!match) return null;
-  const uniqueId    = match[2];
-  const group       = match[3].toUpperCase();
+  let uniqueId, group;
+
+  // Try new naming: sensor.galaxy_gateway_<gw>_group_<uid>_<grp>_state
+  const mNew = name.match(/^galaxy_gateway_([^_]+(?:_[^_]+)*)_group_([^_]+(?:_[^_]+)*)_([^_]+)_state$/);
+  if (mNew) { uniqueId = mNew[2]; group = mNew[3].toUpperCase(); }
+
+  // Try legacy naming: sensor.group_<uid>_<grp>_state
+  if (!uniqueId) {
+    const mLeg = name.match(/^group_([^_]+(?:_[^_]+)*)_([^_]+)_state$/);
+    if (mLeg) { uniqueId = mLeg[1]; group = mLeg[2].toUpperCase(); }
+  }
+
+  if (!uniqueId || !group) return null;
   const alarmEntity = entityId.replace(/_state$/, "_alarm");
-  const mqttTopic   = `galaxy/${uniqueId}/group/${group}/cmd/set`;
+  const base        = (baseTopic || "galaxy").replace(/\/+$/, "");
+  const mqttTopic   = `${base}/${uniqueId}/group/${group}/cmd/set`;
   return { uniqueId, group, alarmEntity, mqttTopic };
 };
 
@@ -81,13 +91,18 @@ class CustomAlarmGroupRow extends LitElement {
   }
 
   setConfig(config) {
-    if (!config.entity) throw new Error("You need to define a group state entity");
+    // Tolerant of empty/invalid entity during editor interaction —
+    // only throw if we have a non-empty entity that actively fails to parse.
+    const parsed = config.entity
+      ? window.GalaxyGroups.parseEntityId(config.entity, config.base_topic)
+      : null;
 
-    const parsed = window.GalaxyGroups.parseEntityId(config.entity);
-    if (!parsed) throw new Error(`Cannot parse Galaxy entity id: "${config.entity}". Expected pattern: sensor.galaxy_gateway_<uid>_group_<uid>_<grp>_state`);
+    if (config.entity && !parsed) {
+      throw new Error(`Cannot parse Galaxy entity id: "${config.entity}". Expected: sensor.galaxy_gateway_<gw>_group_<uid>_<grp>_state or sensor.group_<uid>_<grp>_state`);
+    }
 
     this._parsed = parsed;
-    this._config = { entity_alarm: parsed.alarmEntity, ...config };
+    this._config = { entity_alarm: parsed ? parsed.alarmEntity : "", ...config };
   }
 
   // Called by LitElement when the .config property binding updates from the parent card
@@ -113,6 +128,7 @@ class CustomAlarmGroupRow extends LitElement {
 
   hassChanged() {
     const config    = this._config;
+    if (!config.entity) return;
     const stateObjS = this.hass.states[config.entity];
     const stateObjA = this.hass.states[config.entity_alarm];
     if (!stateObjS || !stateObjA) return;
@@ -163,6 +179,7 @@ class CustomAlarmGroupRow extends LitElement {
   }
 
   setState(e) {
+    if (!this._parsed) return;
     const newState = e.currentTarget.getAttribute("state");
     this.hass.callService("mqtt", "publish", {
       topic: this._parsed.mqttTopic,
@@ -267,7 +284,7 @@ class CustomAlarmGroups extends LitElement {
       }
       throw new Error("You need to define a 'groups' list.");
     }
-    this._config = { title: "Group State", ...config };
+    this._config = { title: "Group State", base_topic: "galaxy", ...config };
   }
 
   static async getConfigElement() {
@@ -278,6 +295,7 @@ class CustomAlarmGroups extends LitElement {
   static getStubConfig() {
     return {
       title: "Group State",
+      base_topic: "galaxy",
       groups: [
         {
           entity: "",
@@ -308,7 +326,7 @@ class CustomAlarmGroups extends LitElement {
           ${groups.map((group) => html`
             <lovelace-galaxy-groups-row
               .hass=${this.hass}
-              .config=${group}
+              .config=${{ ...group, base_topic: this._config.base_topic || "galaxy" }}
             ></lovelace-galaxy-groups-row>
           `)}
         </div>
